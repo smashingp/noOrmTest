@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import es.alop.noorm.data.repositories.TipoGarantiaRepository.TipoGarantiaRowMapper;
 import es.alop.noorm.entities.TipoGarantia;
 import es.alop.noorm.entities.VersaoMensagem;
 import es.alop.noorm.exceptions.DatabaseException;
@@ -36,7 +37,11 @@ public class VersaoMensagemRepository implements es.alop.noorm.data.Repository<V
 			throw new DatabaseException("Erro na inclusão: " + ex.getMessage());
 		}
 	}
-
+	
+	public VersaoMensagem getActiveVersion() {
+		return jdbcTemplate.queryForObject("select * from vers_info_mens where ind_vers_ativ = '1'", new VersaoMensagemRowMapper());
+	}
+	
 	@Override
 	public void delete(VersaoMensagem entity) {
 		// TODO Auto-generated method stub
@@ -50,8 +55,7 @@ public class VersaoMensagemRepository implements es.alop.noorm.data.Repository<V
 
 	@Override
 	public List<VersaoMensagem> findByPK(VersaoMensagem entity) {
-		// TODO Auto-generated method stub
-		return null;
+		return jdbcTemplate.query("select * from vers_info_mens where dat_rfrc_vers = ? and num_vers_prdo_rfrc = ?", new Object[] { entity.getDat_rfrc_vers(), entity.getNum_vers_prdo_rfrc() }, new VersaoMensagemRowMapper());
 	}
 	
 	class VersaoMensagemRowMapper implements RowMapper<VersaoMensagem> {

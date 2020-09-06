@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import es.alop.noorm.data.repositories.TipoGarantiaRepository;
+import es.alop.noorm.data.repositories.VersaoMensagemRepository;
 import es.alop.noorm.entities.TipoGarantia;
 import es.alop.noorm.entities.VersaoMensagem;
 
@@ -15,11 +16,18 @@ public class TipoGarantiaService {
 	@Autowired
 	TipoGarantiaRepository repo;
 	
-	public List<TipoGarantia> getByActiveVersion(VersaoMensagem msgActive) {
+	@Autowired
+	VersaoMensagemRepository vmRepo;
+	
+	public List<TipoGarantia> getByActiveVersion() {
 		
+		VersaoMensagem ativo = vmRepo.getActiveVersion();
 		
+		TipoGarantia tg = new TipoGarantia();
+		tg.setDat_rfrc_vers(ativo.getDat_rfrc_vers());
+		tg.setNum_vers_prdo_rfrc(ativo.getNum_vers_prdo_rfrc());
 		
-		return null;
+		return repo.findByPK(tg);
 	}
 	
 }
