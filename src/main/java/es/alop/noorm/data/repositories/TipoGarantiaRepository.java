@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import es.alop.noorm.entities.TipoGarantia;
+import es.alop.noorm.data.entities.TipoGarantia;
 import es.alop.noorm.exceptions.DatabaseException;
 
 @Repository

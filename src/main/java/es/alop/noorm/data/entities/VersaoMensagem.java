@@ -1,4 +1,4 @@
-package es.alop.noorm.entities;
+package es.alop.noorm.data.entities;
 
 import java.util.Date;
 

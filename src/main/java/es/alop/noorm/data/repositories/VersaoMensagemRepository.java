@@ -10,9 +10,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import es.alop.noorm.data.repositories.TipoGarantiaRepository.TipoGarantiaRowMapper;
-import es.alop.noorm.entities.TipoGarantia;
-import es.alop.noorm.entities.VersaoMensagem;
+import es.alop.noorm.data.entities.VersaoMensagem;
 import es.alop.noorm.exceptions.DatabaseException;
 import es.alop.noorm.utils.Tools;
 
@@ -32,6 +30,9 @@ public class VersaoMensagemRepository implements es.alop.noorm.data.Repository<V
 	@Override
 	public void insert(VersaoMensagem entity) throws DatabaseException {
 		try {
+			if(entity.getInd_vers_ativ().equals("1")) {
+				jdbcTemplate.update("update vers_info_mens set ind_vers_ativ = '0'");
+			}
 			jdbcTemplate.update("insert into vers_info_mens(dat_rfrc_vers, num_vers_prdo_rfrc, dat_hor_carg_vers, ind_vers_ativ) values(?,?,?,?)", Tools.dateToMysqlString(entity.getDat_rfrc_vers()), entity.getNum_vers_prdo_rfrc(), Tools.dateToMysqlString(entity.getDat_hor_carg_vers()), entity.getInd_vers_ativ());
 		} catch(Exception ex) {
 			throw new DatabaseException("Erro na inclusão: " + ex.getMessage());

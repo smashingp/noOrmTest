@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.alop.noorm.data.dto.DataDTO;
-import es.alop.noorm.entities.VersaoMensagem;
 import es.alop.noorm.services.TipoGarantiaService;
 import es.alop.noorm.services.VersaoMensagemService;
 
